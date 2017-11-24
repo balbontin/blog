@@ -8,13 +8,33 @@ class ArticlesController < ApplicationController
   end
 
   def new
+    @article = Article.new
+  end
+
+  def edit
+  @article = Article.find(params[:id])
   end
 
   def create
     @article = Article.new(article_params)
+    # @article = Article.new(params[:article])
+    if @article.save
+        redirect_to @article
+    else
+      render 'new'
+    end
+    # @article.save
+    # redirect_to @article
+  end
 
-    @article.save
-    redirect_to @article
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render 'edit'
+    end
   end
 
   private
